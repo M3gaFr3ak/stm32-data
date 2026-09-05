@@ -355,9 +355,9 @@ block/FLT:
     - name: EXMIN
       byte_offset: 0x34
       fieldset: EXMIN
-    - name: FLTCNVTIMR
+    - name: CNVTIMR
       byte_offset: 0x38
-      fieldset: FLTCNVTIMR
+      fieldset: CNVTIMR
 block/HWID:
   items:
     - name: HWCFGR
@@ -644,7 +644,7 @@ fieldset/FCR:
       description: "Sinc filter order 2: Sinc2 filter type 3: Sinc3 filter type 4: Sinc4 filter type 5: Sinc5 filter type 6-7: Reserved Sincx filter type transfer function: FastSinc filter type transfer function: This bit can only be modified when DFEN=0 (DFSDM_FLTxCR1)."
       bit_offset: 29
       bit_size: 3
-fieldset/FLTCNVTIMR:
+fieldset/CNVTIMR:
   fields:
     - name: CNVCNT
       description: "28-bit timer counting conversion time t = CNVCNT[27:0] / fDFSDMCLK The timer has an input clock from DFSDM clock (system clock fDFSDMCLK). Conversion time measurement is started on each conversion start and stopped when conversion finishes (interval between first and last serial sample). Only in case of filter bypass (FOSR[9:0] = 0) is the conversion time measurement stopped and CNVCNT[27:0] = 0. The counted time is: if FAST=0 (or first conversion in continuous mode if FAST=1): t = [FOSR * (IOSR-1 + FORD) + FORD] / fCKIN ..... for Sincx filters t = [FOSR * (IOSR-1 + 4) + 2] / fCKIN ..... for FastSinc filter if FAST=1 in continuous mode (except first conversion): t = [FOSR * IOSR] / fCKIN in case if FOSR = FOSR[9:0]+1 = 1 (filter bypassed, active only integrator): CNVCNT = 0 (counting is stopped, conversion time: t = IOSR / fCKIN) where: fCKIN is the channel input clock frequency (on given channel CKINy pin) or input data rate in case of parallel data input (from internal ADC or from CPU/DMA write) Note: When conversion is interrupted (e.g. by disable/enable selected channel) the timer counts also this interruption time."
