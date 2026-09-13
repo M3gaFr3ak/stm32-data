@@ -1140,28 +1140,28 @@ impl Triggers {
             ]),
             // STM32F4(13|23)
             (r"^STM32F4(13|23).*:DFSDM1.*", &[
-                Trigger {signal: "DFSDM1_JTRG0", source: "TIM1_TRGO2" },
-                Trigger {signal: "DFSDM1_JTRG1", source: "TIM3_TRGO2" },
-                Trigger {signal: "DFSDM1_JTRG2", source: "TIM8_TRGO2" },
+                Trigger {signal: "DFSDM1_JTRG0", source: "TIM1_TRGO" },
+                Trigger {signal: "DFSDM1_JTRG1", source: "TIM3_TRGO" },
+                Trigger {signal: "DFSDM1_JTRG2", source: "TIM8_TRGO" },
                 Trigger {signal: "DFSDM1_JTRG3", source: "TIM10_OC1" },
                 // Trigger {signal: ":DFSDM1_JTRG4", source: "RESERVED" },
-                Trigger {signal: "DFSDM1_JTRG5", source: "TIM4_TRGO2" },
+                Trigger {signal: "DFSDM1_JTRG5", source: "TIM4_TRGO" },
                 // Trigger {signal: ":DFSDM1_JTRG6", source: "RESERVED" },
-                Trigger {signal: "DFSDM1_JTRG7", source: "TIM6_TRGO1" },
+                Trigger {signal: "DFSDM1_JTRG7", source: "TIM6_TRGO" },
                 // Trigger {signal: ":DFSDM1_JTRG8", source: "RESERVED" },
                 Trigger {signal: "DFSDM1_JTRG9", source: "EXTI11" },
                 Trigger {signal: "DFSDM1_JTRG10", source: "EXTI15" },
             ]),
             (r"^STM32F4(13|23).*:DFSDM2.*", &[
-                Trigger {signal: "DFSDM2_JTRG0", source: "TIM1_TRGO3" },
-                Trigger {signal: "DFSDM2_JTRG1", source: "TIM3_TRGO3" },
-                Trigger {signal: "DFSDM2_JTRG2", source: "TIM8_TRGO4" },
+                Trigger {signal: "DFSDM2_JTRG0", source: "TIM1_TRGO" },
+                Trigger {signal: "DFSDM2_JTRG1", source: "TIM3_TRGO" },
+                Trigger {signal: "DFSDM2_JTRG2", source: "TIM8_TRGO" },
                 Trigger {signal: "DFSDM2_JTRG3", source: "TIM10_OC1" },
-                Trigger {signal: "DFSDM2_JTRG4", source: "TIM2_TRGO2" },
-                Trigger {signal: "DFSDM2_JTRG5", source: "TIM4_TRGO4" },
+                Trigger {signal: "DFSDM2_JTRG4", source: "TIM2_TRGO" },
+                Trigger {signal: "DFSDM2_JTRG5", source: "TIM4_TRGO" },
                 Trigger {signal: "DFSDM2_JTRG6", source: "TIM11_OC1" },
-                Trigger {signal: "DFSDM2_JTRG7", source: "TIM6_TRGO2" },
-                Trigger {signal: "DFSDM2_JTRG8", source: "TIM7_TRGO2" },
+                Trigger {signal: "DFSDM2_JTRG7", source: "TIM6_TRGO" },
+                Trigger {signal: "DFSDM2_JTRG8", source: "TIM7_TRGO" },
                 Trigger {signal: "DFSDM2_JTRG9", source: "EXTI11" },
                 Trigger {signal: "DFSDM2_JTRG10", source: "EXTI15" },
             ]),
@@ -1248,7 +1248,7 @@ impl Triggers {
                 Trigger {signal: "TIMX_BRK_IN2", source: "DFSDM1_BREAK3"},// dfsdm_break[3]  TIM8 break2
             ]),
             // STM32H7(A|B)3
-            (r"^STM32H7(A|B)3.*:DFSDM1.*", &[
+            (r"^STM32H7(A3|B3|B0).*:DFSDM1.*", &[
                 Trigger {signal: "DFSDM1_JTRG0", source: "TIM1_TRGO" },
                 Trigger {signal: "DFSDM1_JTRG1", source: "TIM1_TRGO2" },
                 Trigger {signal: "DFSDM1_JTRG2", source: "TIM8_TRGO" },
@@ -1268,7 +1268,7 @@ impl Triggers {
                 Trigger {signal: "DFSDM1_JTRG30", source: "COMP2_OUT" },
                 // Trigger {signal: ":DFSDM1_JTRG31", source: "RESERVED" },
             ]),
-            (r"^STM32H7(A|B)3.*:DFSDM2.*", &[
+            (r"^STM32H7(A3|B3|B0).*:DFSDM2.*", &[
                 // Trigger {signal: ":DFSDM2_JTRG0..23", source: "RESERVED" },
                 Trigger {signal: "DFSDM2_JTRG24", source: "EXTI11" },
                 Trigger {signal: "DFSDM2_JTRG25", source: "EXTI15" },
@@ -1279,17 +1279,17 @@ impl Triggers {
                 Trigger {signal: "DFSDM2_JTRG30", source: "COMP2_OUT" },
                 // Trigger {signal: ":DFSDM2_JTRG31", source: "RESERVED" },
             ]),
-            (r"^STM32H7(A|B)3.*:TIM15.*", &[
+            (r"^STM32H7(A3|B3|B0).*:TIM15.*", &[
                 Trigger {signal: "TIMX_BRK_IN1", source: "DFSDM1_BREAK0"},// dfsdm_break[0]  TIM1/TIM15 break
             ]),
-            (r"^STM32H7(A|B)3.*:TIM1.*", &[
+            (r"^STM32H7(A3|B3|B0).*:TIM1.*", &[
                 Trigger {signal: "TIMX_BRK_IN1", source: "DFSDM1_BREAK0"},// dfsdm_break[0]  TIM1/TIM15 break
                 Trigger {signal: "TIMX_BRK_IN2", source: "DFSDM1_BREAK1"},// dfsdm_break[1]  TIM1 break2/TIM16 break
             ]),
-            (r"^STM32H7(A|B)3.*:TIM16.*", &[
+            (r"^STM32H7(A3|B3|B0).*:TIM16.*", &[
                 Trigger {signal: "TIMX_BRK_IN1", source: "DFSDM1_BREAK1"},// dfsdm_break[1]  TIM1 break2/TIM16 break
             ]),
-            (r"^STM32H7(A|B)3.*:LPTIM3.*", &[
+            (r"^STM32H7(A3|B3|B0).*:LPTIM3.*", &[
                 // TODO LPTIM3_ETR doesn't exist as a source yet, so it crashes the buildscript.
                 // Trigger {signal: "LPTIM3_ETR", source: "DFSDM2_BREAK0"},// dfsdm_break[0]  LPTIM3_ETR
             ]),
