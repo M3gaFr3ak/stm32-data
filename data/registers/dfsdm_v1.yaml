@@ -1,10 +1,4 @@
-# TOP LEVEL BLOCKS
 
-
-# RM0455 (STM32H7A3/H7B3/H7B0 DFSDM2): Configuration hosting 2 transceiver
-# channels, 1 filter channel, 5-bit trigger width, no delay (DLY)
-# registers, no internal ADC path, and no hardware description (HWID)
-# registers.
 block/DFSDM_2CH_1FLT_TRG5:
   description: Digital filter for sigma delta modulators.
   items:
@@ -23,11 +17,6 @@ block/DFSDM_2CH_1FLT_TRG5:
       byte_offset: 0x100
       block: FLT
 
-# RM0394 (STM32L451/452/462) and RM0402 (STM32F412): Configuration hosting
-# 4 transceiver channels, 2 filter channels, 3-bit trigger width
-# (JEXTSEL[2:0]), parallel input restricted to CPU/DMA writes (no internal
-# ADC path), no delay (DLY) registers, and no hardware description (HWID)
-# registers.
 block/DFSDM_4CH_2FLT_TRG3:
   description: Digital filter for sigma delta modulators.
   items:
@@ -46,10 +35,6 @@ block/DFSDM_4CH_2FLT_TRG3:
       byte_offset: 0x100
       block: FLT
 
-# RM0430 (STM32F413/423 DFSDM1): Configuration hosting 4 transceiver
-# channels, 2 filter channels, 3-bit trigger width, active channel delay
-# tuning registers (DLY), no internal ADC path, and no hardware description
-# (HWID) registers.
 block/DFSDM_4CH_2FLT_DLY_TRG3:
   description: Digital filter for sigma delta modulators.
   items:
@@ -68,10 +53,6 @@ block/DFSDM_4CH_2FLT_DLY_TRG3:
       byte_offset: 0x100
       block: FLT
 
-
-# RM0432 (STM32L4Px/L4Qx): Configuration hosting 4 transceiver channels,
-# 2 filter channels, 5-bit trigger width, parallel internal ADC routing,
-# and active channel delay tuning registers (DLY).
 block/DFSDM_4CH_2FLT_DLY_TRG5_ADC:
   description: Digital filter for sigma delta modulators.
   items:
@@ -90,9 +71,6 @@ block/DFSDM_4CH_2FLT_DLY_TRG5_ADC:
       byte_offset: 0x100
       block: FLT
 
-# RM0475 (STM32MP13xx): Configuration hosting 4 transceiver channels,
-# 2 filter channels, 5-bit trigger width, parallel internal ADC routing,
-# active delay (DLY) registers, and a hardware description (HWID) block.
 block/DFSDM_4CH_2FLT_DLY_TRG5_ADC_HWID:
   description: Digital filter for sigma delta modulators.
   extends: DFSDM_4CH_2FLT_DLY_TRG5_ADC
@@ -102,9 +80,6 @@ block/DFSDM_4CH_2FLT_DLY_TRG5_ADC_HWID:
       byte_offset: 0x7F0
       block: HWID
 
-# RM0438 (STM32L5 Series): Configuration hosting 4 transceiver channels,
-# 4 filter channels, 5-bit trigger width, parallel internal ADC routing,
-# and active channel delay tuning registers (DLY).
 block/DFSDM_4CH_4FLT_DLY_TRG5_ADC:
   description: Digital filter for sigma delta modulators.
   items:
@@ -123,10 +98,6 @@ block/DFSDM_4CH_4FLT_DLY_TRG5_ADC:
       byte_offset: 0x100
       block: FLT
       
-# RM0430 (STM32F413/423 DFSDM2): Configuration hosting 8 transceiver
-# channels, 4 filter channels, 3-bit trigger width, active channel delay
-# tuning registers (DLY), no internal ADC path, and no hardware description
-# (HWID) registers.
 block/DFSDM_8CH_4FLT_DLY_TRG3:
   description: Digital filter for sigma delta modulators.
   items:
@@ -145,10 +116,6 @@ block/DFSDM_8CH_4FLT_DLY_TRG3:
       byte_offset: 0x100
       block: FLT
 
-# RM0410 (STM32F76xxx/F77xxx): Configuration hosting 8 transceiver
-# channels, 4 filter channels, 5-bit trigger width (JEXTSEL[4:0]), no
-# internal ADC path, no delay (DLY) registers, and no hardware description
-# (HWID) registers.
 block/DFSDM_8CH_4FLT_TRG5:
   description: Digital filter for sigma delta modulators.
   items:
@@ -167,9 +134,6 @@ block/DFSDM_8CH_4FLT_TRG5:
       byte_offset: 0x100
       block: FLT
 
-# RM0351 (STM32L47x/48x): Configuration hosting 8 transceiver channels,
-# 4 filter channels, 3-bit trigger width, no internal ADC path, no delay
-# (DLY) registers, and no hardware description (HWID) registers.
 block/DFSDM_8CH_4FLT_TRG3:
   description: Digital filter for sigma delta modulators.
   items:
@@ -188,18 +152,11 @@ block/DFSDM_8CH_4FLT_TRG3:
       byte_offset: 0x100
       block: FLT
 
-# RM0351 (STM32L49x/4Ax): Configuration hosting 8 transceiver channels,
-# 4 filter channels, 3-bit trigger width, parallel internal ADC routing,
-# no delay (DLY) registers, and no hardware description (HWID) registers.
 block/DFSDM_8CH_4FLT_TRG3_ADC:
   description: Digital filter for sigma delta modulators.
   extends: DFSDM_8CH_4FLT_TRG3
   items: []
 
-# RM0399 (STM32H745/755/747/757) and RM0433 (STM32H742/743/753/750):
-# Configuration hosting 8 transceiver channels, 4 filter channels, 5-bit
-# trigger width, parallel internal ADC routing, no delay (DLY) registers,
-# and no hardware description (HWID) registers.
 block/DFSDM_8CH_4FLT_TRG5_ADC:
   description: Digital filter for sigma delta modulators.
   items:
@@ -218,10 +175,6 @@ block/DFSDM_8CH_4FLT_TRG5_ADC:
       byte_offset: 0x100
       block: FLT
 
-# RM0432 (STM32L4Rx/L4Sx) and RM0468 (STM32H723/725/730/733/735):
-# Configuration hosting 8 transceiver channels, 4 filter channels, 5-bit
-# trigger width, parallel internal ADC routing, and active channel delay
-# tuning registers (DLY).
 block/DFSDM_8CH_4FLT_DLY_TRG5_ADC:
   description: Digital filter for sigma delta modulators.
   items:
@@ -240,11 +193,6 @@ block/DFSDM_8CH_4FLT_DLY_TRG5_ADC:
       byte_offset: 0x100
       block: FLT
 
-# RM0436 (STM32MP157), RM0441 (STM32MP151), and RM0442 (STM32MP153):
-# Configuration hosting 8 transceiver channels, 6 filter channels
-# (FLT0-FLT5), 5-bit trigger width, parallel internal ADC routing, active
-# delay (DLY) registers, and a hardware description (HWID) block at
-# offsets 0x7F0-0x7FC.
 block/DFSDM_8CH_6FLT_DLY_TRG5_ADC_HWID:
   description: Digital filter for sigma delta modulators.
   items:
@@ -267,9 +215,6 @@ block/DFSDM_8CH_6FLT_DLY_TRG5_ADC_HWID:
       byte_offset: 0x7F0
       block: HWID
 
-# RM0455 (STM32H7A3/H7B3/H7B0 DFSDM1): Configuration hosting 8 transceiver
-# channels, 8 filter channels (FLT0-FLT7), 5-bit trigger width, parallel
-# internal ADC routing, and active delay (DLY) registers.
 block/DFSDM_8CH_8FLT_DLY_TRG5_ADC:
   description: Digital filter for sigma delta modulators.
   items:
@@ -288,10 +233,6 @@ block/DFSDM_8CH_8FLT_DLY_TRG5_ADC:
       byte_offset: 0x100
       block: FLT
 
-# Superset of all variants:
-# 8 transceiver channels, 8 filter channels (FLT0-FLT7), 5-bit trigger
-# width, parallel internal ADC routing, active delay (DLY) registers, and
-# a hardware description (HWID) block.
 block/DFSDM_SUPERSET:
   description: Digital filter for sigma delta modulators.
   items:
@@ -314,7 +255,6 @@ block/DFSDM_SUPERSET:
       byte_offset: 0x7F0
       block: HWID
 
-# IMPL BLOCKS
 block/CH_DLY:
   extends: CH
   description: Basic timers

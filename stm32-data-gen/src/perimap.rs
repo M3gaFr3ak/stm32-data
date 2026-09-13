@@ -871,7 +871,6 @@ const PERIMAP: &[(&str, (&str, &str, &str))] = &[
     (".*:XSPI[12]:XSPI:xspi_v2_1H7RS*", ("xspi", "v1", "XSPI")),
     (".*:XSPIM:XSPIM:xspi_v2_1H7RS*", ("xspim", "v1", "XSPIM")),
     ("STM32H7.*:MDMA:.*", ("mdma", "v1", "MDMA")),
-    // --- STM32L4 ---
     (
         r"STM32L4(1|2|3|4|5|6).*:dfsdm1_v1_0_4ch.*",
         ("dfsdm", "v1", "DFSDM_4CH_2FLT_TRG3"),
@@ -889,16 +888,13 @@ const PERIMAP: &[(&str, (&str, &str, &str))] = &[
         r"STM32L4(R|S).*:dfsdm1_v1_0_L4R.*",
         ("dfsdm", "v1", "DFSDM_8CH_4FLT_DLY_TRG5_ADC"),
     ),
-    // --- STM32F4 ---
     (r"STM32F412.*:dfsdm1_v1_0_4ch.*", ("dfsdm", "v1", "DFSDM_4CH_2FLT_TRG3")),
     (r"STM32F4(13|23).*:DFSDM1.*", ("dfsdm", "v1", "DFSDM_4CH_2FLT_DLY_TRG3")),
     (r"STM32F4(13|23).*:DFSDM2.*", ("dfsdm", "v1", "DFSDM_8CH_4FLT_DLY_TRG3")),
-    // --- STM32L5 ---
     (
         r"STM32L5.*:dfsdm1_v2_1_L5.*",
         ("dfsdm", "v1", "DFSDM_4CH_4FLT_DLY_TRG5_ADC"),
     ),
-    // --- STM32MP1 ---
     (
         r"STM32MP13.*:dfsdm1_v1_0_4ch_MP13.*",
         ("dfsdm", "v1", "DFSDM_4CH_2FLT_DLY_TRG5_ADC_HWID"),
@@ -907,12 +903,10 @@ const PERIMAP: &[(&str, (&str, &str, &str))] = &[
         r"STM32MP15.*:STM32MP_dfsdm1_v2_1.*",
         ("dfsdm", "v1", "DFSDM_8CH_6FLT_DLY_TRG5_ADC_HWID"),
     ),
-    // --- STM32F7 ---
     (
         r"STM32F7(6|7).*:dfsdm1_F7_v1_0.*",
         ("dfsdm", "v1", "DFSDM_8CH_4FLT_TRG5"),
     ),
-    // --- STM32H7 ---
     (
         r"STM32H7(42|43|45|50|53|55|47|57).*:dfsdm1_v1_0_H7.*",
         ("dfsdm", "v1", "DFSDM_8CH_4FLT_TRG5_ADC"),
