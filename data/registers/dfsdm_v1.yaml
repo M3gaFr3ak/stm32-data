@@ -158,10 +158,11 @@ block/DFSDM_8CH_4FLT_TRG5:
         stride: 0x80
       byte_offset: 0x100
       block: FLT
-# RM0351 (STM32L47xxx–4axxx): Symmetrical 8-channel, 4-filter layout
-# with 3-bit trigger routing and parallel internal ADC routing,
+
+# RM0351 (STM32L47/8): Symmetrical 8-channel, 4-filter layout
+# with 3-bit trigger routing,
 # lacking active DLY registers or HWID registers.
-block/DFSDM_8CH_4FLT_TRG3_ADC:
+block/DFSDM_8CH_4FLT_TRG3:
   description: Digital filter for sigma delta modulators.
   items:
     - name: CH
@@ -178,6 +179,14 @@ block/DFSDM_8CH_4FLT_TRG3_ADC:
         stride: 0x80
       byte_offset: 0x100
       block: FLT
+
+# RM0351 (STM32L49/A): Symmetrical 8-channel, 4-filter layout
+# with 3-bit trigger routing and parallel internal ADC routing,
+# lacking active DLY registers or HWID registers.
+block/DFSDM_8CH_4FLT_TRG3_ADC:
+  description: Digital filter for sigma delta modulators.
+  extends: DFSDM_8CH_4FLT_TRG3
+  items: []
 
 # RM0399 (STM32H745-757) and RM0433 (STM32H742-750): Standard
 # high-performance configuration consisting of 8 transceiver channels,

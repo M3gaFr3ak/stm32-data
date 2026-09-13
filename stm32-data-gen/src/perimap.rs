@@ -876,8 +876,9 @@ const PERIMAP: &[(&str, (&str, &str, &str))] = &[
         r"STM32L4(1|2|3|4|5|6).*:dfsdm1_v1_0_4ch.*",
         ("dfsdm", "v1", "DFSDM_4CH_2FLT_TRG3"),
     ),
+    (r"STM32L4(7|8).*:dfsdm1_v1_0.*", ("dfsdm", "v1", "DFSDM_8CH_4FLT_TRG3")),
     (
-        r"STM32L4(7|8|9|A).*:dfsdm1_v1_0_4ch_L4x1.*",
+        r"STM32L4(9|A).*:dfsdm1_v1_0_L49.*",
         ("dfsdm", "v1", "DFSDM_8CH_4FLT_TRG3_ADC"),
     ),
     (
