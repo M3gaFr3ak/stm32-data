@@ -2248,6 +2248,7 @@ fieldset/D3CCIPR:
     description: DFSDM2 kernel clock source selection
     bit_offset: 27
     bit_size: 1
+    enum: DFSDM2SEL
   - name: SPI6SEL
     description: SPI6 kernel clock source selection
     bit_offset: 28
@@ -2448,6 +2449,15 @@ enum/DFSDMSEL:
   variants:
   - name: PCLK2
     description: rcc_pclk2 selected as peripheral clock
+    value: 0
+  - name: SYS
+    description: System clock selected as peripheral clock
+    value: 1
+enum/DFSDM2SEL:
+  bit_size: 1
+  variants:
+  - name: PCLK4
+    description: rcc_pclk4 selected as peripheral clock
     value: 0
   - name: SYS
     description: System clock selected as peripheral clock
