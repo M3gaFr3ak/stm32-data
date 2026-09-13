@@ -42,20 +42,20 @@ generated chip JSONs. Companion file on the HAL side:
 
 ## TODO
 
-- [ ] **SD10 — trigger.rs signal naming for 3-bit-JEXTSEL chips (PRIORITY 1).**
+- [X] **SD10 — trigger.rs signal naming for 3-bit-JEXTSEL chips (PRIORITY 1) — SUPERSEDED.**
   The signal suffix is written verbatim as JEXTSEL (build.rs
   `trigger_trait_impl!` → `InjectedTrigger::signal()` → `set_jextsel`). 5-bit
   chips are global-indexed (JEXTSEL 0x00-0x1F → jtrg0-31, gaps = reserved
   encodings) → suffix == encoding, correct. 3-bit chips (F412, F413,
   L451/452/462, L471-486, L496/A6) are COMPACTED (rm0430/rm0402/rm0351:
   0x00-0x07 → jtrg{0,1,2,3,5,7,9,10}, skipping N/A jtrg4/6/8) → suffix !=
-  encoding, wrong trigger selected (e.g. JTRG5 → 0x05 → hardware jtrg7). Fix:
-  renumber those suffixes to compact 0-7; verify each chip's encoding from the
-  PDF — especially F413 DFSDM2, whose 4-column table pdftotext garbles (confirm
-  which 8 of its 11 sources are selectable). Pure data rename; no embassy
-  driver change.
+  encoding, wrong trigger selected (e.g. JTRG5 → 0x05 → hardware jtrg7).
+  **No data renumber.** Superseded by the embassy trigger rework: build.rs now
+  emits `TriggerSource` impls directly (identity on TRG5, remap from
+  `embassy-stm32/src/dfsdm/trigger_map.rs` on TRG3), so the 3-bit suffix is
+  only the jtrg channel number, never the raw JEXTSEL.
 
-- [ ] **SD1 — header.rs: DFSDM1 `_NS` alias (unlocks L552/L562).**
+- [X] **SD1 — header.rs: DFSDM1 `_NS` alias (unlocks L552/L562).**
   Root cause: L5 is TrustZone-attributed (RM0438 `DFSDM1SEC`); its Cube
   headers define only `DFSDM1_BASE_NS` (zero plain `DFSDM1_BASE`), so
   `resolve_peri_addr` → None and the generator silently drops the DFSDM1
@@ -63,16 +63,19 @@ generated chip JSONs. Companion file on the HAL side:
   Fix: add to `ALT_PERI_DEFINES` in `stm32-data-gen/src/header.rs`
   (get_peri_addr, ~line 195; precedented by OCTOSPI/USB/FMC `_NS` aliases):
   `("DFSDM1", &["DFSDM1_BASE", "DFSDM1_BASE_NS"])`. generator.rs untouched.
+  **DONE**: alias added; L552/562 now emit `DFSDM1` (block
+  `DFSDM_4CH_4FLT_DLY_TRG5_ADC`).
 
-- [ ] **SD2 — perimap.rs: F7 regex excludes F777/778/779.**
+- [X] **SD2 — perimap.rs: F7 regex excludes F777/778/779.**
   `r"STM32F7[6].*:dfsdm1_F7_v1_0.*"` — char class `[6]` never matches F77x.
   STM32F777NI.json has DFSDM1 (cubedb) but no registers block. 11+ chip
   groups affected. Fix: `STM32F7[67].*` (covers F765/767/768/769 and
   F777/778/779 — F768/778's distinguishing digit is the 4th). Config name is
   shared (`dfsdm1_F7_v1_0_Cube`) across all F7xx — F77x get the same block,
   no new block needed.
+  **DONE**: `STM32F7(6|7)`; F777/778/779 now mapped to `DFSDM_8CH_4FLT_TRG5`.
 
-- [ ] **SD3 — perimap.rs: L4 regexes dead/wrong (L451/452/462 + L471/475/476/
+- [X] **SD3 — perimap.rs: L4 regexes dead/wrong (L451/452/462 + L471/475/476/
   485/486 missing).**
   - `r"STM32L4[9]2.*"` targets "L492" — no such chip. Dead.
   - `r"STM32L4[10].*"` / `r"STM32L4[11].*"` char classes only match L41x/L40x
@@ -89,13 +92,18 @@ generated chip JSONs. Companion file on the HAL side:
     patterns are safe): **replace the three dead L4 patterns above** with
     `(r"STM32L4(5|6)(1|2).*:dfsdm1_v1_0_4ch_L4x1.*", ("dfsdm","v1","DFSDM_4CH_2FLT_TRG3"))`
     `(r"STM32L4(7|8).*:dfsdm1_v1_0_Cube.*", ("dfsdm","v1","DFSDM_8CH_4FLT_TRG3"))`
+  **DONE**: new regexes `L4(5|6)(1|2)` → `4CH_2FLT_TRG3`, `L4(7|8)` →
+  new `8CH_4FLT_TRG3` (no-ADC block added to `dfsdm_v1.yaml`), `L4(9|A)` →
+  `8CH_4FLT_TRG3_ADC`.
 
-- [ ] **SD4 — trigger.rs: H7B0 uncovered.** All H7A/B sections use
+- [X] **SD4 — trigger.rs: H7B0 uncovered.** All H7A/B sections use
   `r"^STM32H7(A|B)3"` — H7B0 (5 chips; has DFSDM1+DFSDM2+LPTIM1/2/3) matches
   neither. Widen to `r"^STM32H7(A|B)"` (perimap already covers H7B0 via
   `H7[AB]`).
+  **DONE**: widened to `^STM32H7(A3|B3|B0)` (matching perimap); H7B0 triggers
+  now emitted (23 DFSDM JTRG triggers on STM32H7B0AB).
 
-- [ ] **SD5 — trigger.rs: F413 JTRG names corrupted — RESOLVED, fix values.**
+- [X] **SD5 — trigger.rs: F413 JTRG names corrupted — RESOLVED, fix values.**
   RM0430 Rev 9 Table 89 prints trailing digits (TIM1_TRGO2/TIM3_TRGO3/
   TIM8_TRGO4/TIM6_TRGO1/...). Evidence they are orphaned footnote markers,
   not signal names: digits are inline full-size glyphs (page 392 rendered at
@@ -109,6 +117,8 @@ generated chip JSONs. Companion file on the HAL side:
   - DFSDM2: jtrg0 TIM1_TRGO, jtrg1 TIM3_TRGO, jtrg2 TIM8_TRGO, jtrg3
     TIM10_OC1, jtrg4 TIM2_TRGO, jtrg5 TIM4_TRGO, jtrg6 TIM11_OC1, jtrg7
     TIM6_TRGO, jtrg8 TIM7_TRGO, jtrg9 EXTI11, jtrg10 EXTI15.
+  **DONE**: digits stripped; re-confirmed via text layer (MMS2=0, clean
+  `tim1_trgo`/`tim3_trgo`/`tim4_trgo`/`tim8_trgo` in ADC Table 78).
   Footnote semantics unknown — if ST ever clarifies (e.g. F423-only
   sources), revisit.
   - DFSDM1 jtrg4/jtrg6/jtrg8 stay **reserved** (currently commented out in
@@ -124,15 +134,20 @@ generated chip JSONs. Companion file on the HAL side:
   model LPTIM ETR input signals (or special-case), then uncomment. Not
   blocking anything else.
 
-- [ ] **SD7 (minor) — MP1 RCC missing ADFSDM bits.** rm0436/rm0441/rm0442
+- [X] **SD7 (minor) — MP1 RCC missing ADFSDM bits.** rm0436/rm0441/rm0442
   RCC APB2 have `ADFSDMEN`/`ADFSDMLPEN` (bit 21, audio-clock enable for
   DFSDM) next to DFSDMEN (bit 20). `rcc_mp1.yaml` has only DFSDM* fields.
   Needed for CKOUTSRC=audio on MP1; MP1 is not embassy-supported, minor.
+  **DONE (no-op)**: `ADFSDMEN`/`ADFSDMLPEN` (bit 21) are already present in
+  all four SET/CLR × EN/LPEN fieldsets of `rcc_mp1.yaml`.
 
-- [ ] **SD8 (minor) — H7A/B DFSDM2 kernel clock not muxed.** Chip JSONs wire
+- [X] **SD8 (minor) — H7A/B DFSDM2 kernel clock not muxed.** Chip JSONs wire
   DFSDM2 kernel as fixed `PCLK4`, but rm0455 defines `DFSDM2SEL` (bit 27 mux)
   and `rcc_h7ab.yaml` already carries the field. Wire the kernel mux in the
   peripheral-to-clock mapping when DFSDM2 support lands in embassy.
+  **DONE**: the `DFSDM2SEL` field was missing its `enum:`. Added
+  `enum/DFSDM2SEL` (`PCLK4`=0 / `SYS`=1, per rm0455); `parse_rcc` now derives
+  the mux and DFSDM2 `kernel_clock` becomes `Mux(D3CCIPR.DFSDM2SEL)`.
 
 - [ ] **SD9 (info, no action) — MP13 chips don't exist.** cubedb has
   STM32M131/M133/M135 with DFSDM (`dfsdm1_v1_0_4ch_MP13_Cube`) but no MP13
@@ -144,16 +159,19 @@ generated chip JSONs. Companion file on the HAL side:
 
 ## REGENERATE + VERIFY
 
-- [ ] Re-run the data + metapac generation after SD1-SD5, SD10.
-- [ ] Expected newly-enabled DFSDM chips: F777/F778/F779, L451/L452/L462,
-  L471/L475/L476/L485/L486, L552/L562 (SD1), H7B0 trigger signals (SD4);
-  F413 trigger names corrected (SD5); 3-bit chips' trigger suffixes
-  renumbered to compact 0-7 (SD10).
-- [ ] Expected blocks after fixes: L451/452/462 → `DFSDM_4CH_2FLT_TRG3`;
-  L471-486 → `DFSDM_8CH_4FLT_TRG3`; F777-779 → `DFSDM_8CH_4FLT_TRG5`;
-  L552/562 → `DFSDM_4CH_4FLT_DLY_TRG5_ADC` (existing regex, currently
-  unreachable). Side effect: `DFSDM_2CH_1FLT_TRG3_ADC` and
+- [X] Re-run the data + metapac generation after SD1-SD5, SD10.
+- [X] Expected newly-enabled DFSDM chips confirmed present: F777/F778/F779,
+  L451/L452/L462, L471/L475/L476/L485/L486, L552/L562 (SD1), H7B0 trigger
+  signals (SD4); F413 trigger names corrected (SD5). SD10 needs no renumber
+  (superseded — embassy remaps in `trigger_map.rs`).
+- [X] Expected blocks after fixes: L451/452/462 → `DFSDM_4CH_2FLT_TRG3`;
+  L471-486 → `DFSDM_8CH_4FLT_TRG3` (new no-ADC block); L496/L4A6 →
+  `DFSDM_8CH_4FLT_TRG3_ADC`; F777-779 → `DFSDM_8CH_4FLT_TRG5`; L552/562 →
+  `DFSDM_4CH_4FLT_DLY_TRG5_ADC`. Side effect: `DFSDM_2CH_1FLT_TRG3_ADC` and
   `DFSDM_4CH_2FLT_TRG3_ADC` become fully chip-less (already reflected on the
   embassy side in HOUSEKEEPING).
-- [ ] Embassy-side check matrix tracked in
-  `embassy-stm32/src/dfsdm/TODO-v2.md` → VERIFY.
+  Sweep result: 13 distinct DFSDM blocks in use, **0 unmapped**, all families
+  covered (F4/F7/H7/H7AB/L4/L4+/L5/MP1).
+- [X] Embassy-side check matrix tracked in
+  `embassy-stm32/src/dfsdm/TODO-v2.md` → VERIFY (h755/l452/f412/f413/l496/l4a6
+  compile; H7A3/H7B3/H7B0 compile after embassy rebase onto main).
